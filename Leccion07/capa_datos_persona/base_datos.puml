@@ -1,0 +1,58 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+package acceso_datos {
+
+    class conexion {
+        - DATABASE: String
+        - USERNAME: String
+        - PASSWORD: String
+        - DB_PORT: String
+        - HOST: String
+        - conexion: connection
+        - cursor: Cursor
+        __
+        + obtenerConexion(cls): Connection
+        + obtenerCursor(cls): Cursor
+        + cerrar(cls)
+
+        __
+        "Responsabilidad: Administrar la conexión a la base de datos"
+    }
+
+    class Persona {
+        - id_persona: int
+        - nombre: String
+        - apellido: String
+        - email: String
+        __
+        + __str__(): String
+        + método Get/Set de cada atributo
+
+        __
+        "Responsabilidad: Crear objetos de la entidad de Persona"
+    }
+
+    class PersonaDao {
+        - SELECCIONAR: String
+        - INSERTAR: String
+        - ACTUALIZAR: String
+        - ELIMINAR: String
+        __
+        + seleccionar(cls)
+        + insertar(cls, persona)
+        + actualizar(cls, persona)
+        + eliminar(cls, persona)
+
+        __
+        "Responsabilidad: Realizar operaciones sobre la base de datos de Persona"
+    }
+
+    ' Posicionamiento forzado
+    conexion -[hidden]--> Persona : ""
+    conexion --> PersonaDao
+    Persona --> PersonaDao
+
+}
+
+@enduml
